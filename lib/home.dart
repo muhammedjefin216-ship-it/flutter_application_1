@@ -1,50 +1,53 @@
-
-import 'login.dart';
 import 'package:flutter/material.dart';
+import 'login.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
-  void showMyAlert(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: const Color.fromARGB(255, 206, 200, 200),
-          title: Text("Confirmation"),
-           
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
 
-          content: Text("Are you sure you want to delete?"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); 
-              },
-              child: Text("NO"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Deleted Successfully")),
-                );
-              },
-              child: Text("YES"),
-            ),
-          ],
-        );
-      },
-    );
-  }
+class _HomePageState extends State<HomePage> {
+  
+  final List<String> items = [
+    'Item One',
+    'Item Two',
+    'Item Three',
+    'Item Four',
+    'Item Five',
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Alerts")),
-      body: Center(
-        child: ElevatedButton(
-          child: Text("Show Alert"),
-          onPressed: () => showMyAlert(context),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Home'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginPage(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+
+        // 👇 Very basic ListView
+        body: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(items[index]),
+            );
+          },
         ),
       ),
     );
