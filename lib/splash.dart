@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return const Scaffold(
       body: Center(
         child: Text(
-          'Welcome to My App',
+          'Welcome',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
